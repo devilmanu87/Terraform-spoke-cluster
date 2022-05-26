@@ -1,0 +1,16 @@
+#For local testing
+az login --service-principal --username http://agrid-cpe-d1-aks-rw-cicd-spn-01 --password ABb*********** --tenant f7d9f3f1-3841-4bfc-9cd4-c0e1964b5f86
+#For Jump VM testing
+set ARM_SUBSCRIPTION_ID="4cdde026-a1dc-48ef-98be-b48892c3f96d"
+set ARM_CLIENT_ID="f9fc4ebb-0b04-4820-8f04-f6f9f590e054"
+set ARM_CLIENT_SECRET="ABbK********************"
+set ARM_TENANT_ID="f7d9f3f1-3841-4bfc-9cd4-c0e1964b5f86"
+
+terraform init -backend-config container_name="agrid-iac-tfstate" -backend-config key="aksclusters/managed-aks-cluster.terraform.tfstate" -upgrade
+
+terraform workspace list
+
+terraform workspace select agrid-01-d1-spoke1-001
+
+terraform plan -var-file="./agrid-01-d1-spoke1-001/agrid-01-d1-spoke1-001.tfvars" -out "./agrid-01-d1-spoke1-001/agrid-01-d1-spoke1-001.tfvars.plan"
+ 
